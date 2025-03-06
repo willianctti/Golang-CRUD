@@ -1,0 +1,66 @@
+criando crudzinho com go
+
+📌 Stack:
+Gorilla Mux → Para gerenciar as rotas.
+Gorm → ORM para facilitar a interação com o banco de dados.
+PostgreSQL → Banco de dados.
+Docker (Opcional) → Para rodar o banco sem instalar localmente
+
+dei o mkdir e cd na pastinha do crud
+criei o o go.mod com go mod init go-crud
+
+dependencias: 
+
+go get -u github.com/gorilla/mux
+go get -u gorm.io/gorm
+go get -u gorm.io/driver/postgres
+
+abri o docker desktop e subi o docker com nosso postgres 
+para o crudzinho: 
+
+
+issoe@DESKTOP-3VE80HL MINGW64 /d/CRUDWithGo/go-crud
+$ docker run --name pgcrud -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=go_crud -p 5432:5432 -d postgres
+80de615cbb15b90285a7a113ed4375e97ca4edb35c58ee2c6dabda6bfafe14f6
+
+
+Estrutura do Projeto:
+
+go-crud/
+  ├── main.go         # Arquivo principal
+  ├── database/       # Pasta com código do banco de dados
+  │   └── database.go
+  ├── handlers/       # Pasta com manipuladores de requisições
+  │   └── user.go
+  ├── models/         # Pasta com estruturas de dados
+  │   └── user.go
+  └── go.mod         # Arquivo de dependências
+
+go.mod:
+É como se fosse o "package.json" do Node.js
+Define o nome do módulo e suas dependências
+Gerencia as versões das bibliotecas que você usa
+
+
+models/user.go:
+Define a estrutura de dados do usuário
+É como uma "classe" em outras linguagens
+gorm.Model adiciona campos automáticos (ID, CreatedAt, UpdatedAt, DeletedAt)
+
+
+handlers/user.go:
+São como "controllers" em outras linguagens
+Manipulam as requisições HTTP (POST, GET, PUT, DELETE)
+Cada função trata uma rota específica
+
+
+database/database.go:
+Configura a conexão com o PostgreSQL
+Cria o banco de dados se não existir
+Cria as tabelas automaticamente
+
+
+main.go:
+É o ponto de entrada da aplicação
+Configura as rotas (endpoints da API)
+Inicia o servidor HTTP
